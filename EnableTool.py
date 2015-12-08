@@ -8,11 +8,11 @@ class Example(wx.Frame):
     def initUI(self):
         self.count = 5
         self.toolbar = self.CreateToolBar()
-        tundo = self.toolbar.AddLabelTool(wx.ID_UNDO, 'Undo', wx.Bitmap('tundo.png'))
-        tredo = self.toolbar.AddLabelTool(wx.ID_REDO, 'Redo', wx.Bitmap('tredo.png'))
+        tundo = self.toolbar.AddLabelTool(wx.ID_UNDO, 'Undo', wx.Bitmap('icon/tundo.png'))
+        tredo = self.toolbar.AddLabelTool(wx.ID_REDO, 'Redo', wx.Bitmap('icon/tredo.png'))
         self.toolbar.EnableTool(wx.ID_REDO, False)# Disable redo
         self.toolbar.AddSeparator()
-        qtool = self.toolbar.AddLabelTool(wx.ID_ANY, 'Quit', wx.Bitmap('texit.png'))
+        qtool = self.toolbar.AddLabelTool(wx.ID_ANY, 'Quit', wx.Bitmap('icon/texit.png'))
 
         self.Bind(wx.EVT_TOOL, self.OnRedo, tredo)
         self.Bind(wx.EVT_TOOL, self.OnUndo, tundo)

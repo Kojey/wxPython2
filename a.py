@@ -2,62 +2,54 @@ import wx
 
 class Example(wx.Frame):
 
-    def __init__(self, *args, **kwargs):
-        super(Example, self).__init__(*args, **kwargs)
+    def __init__(self, parent, title):
+        super(Example, self).__init__(parent, title=title,
+            size=(300, 250))
 
         self.InitUI()
+        self.Centre()
+        self.Show()
 
     def InitUI(self):
 
-        self.count = 5
-
-        self.toolbar = self.CreateToolBar()
-        tundo = self.toolbar.AddLabelTool(wx.ID_UNDO, '', wx.Bitmap('tundo.png'))
-        tredo = self.toolbar.AddLabelTool(wx.ID_REDO, '', wx.Bitmap('tredo.png'))
-        self.toolbar.EnableTool(wx.ID_REDO, False)
-        self.toolbar.AddSeparator()
-        texit = self.toolbar.AddLabelTool(wx.ID_EXIT, '', wx.Bitmap('texit.png'))
-        self.toolbar.Realize()
-
-        self.Bind(wx.EVT_TOOL, self.OnQuit, texit)
-        self.Bind(wx.EVT_TOOL, self.OnUndo, tundo)
-        self.Bind(wx.EVT_TOOL, self.OnRedo, tredo)
-
-        self.SetSize((250, 200))
-        self.SetTitle('Undo redo')
-        self.Centre()
-        self.Show(True)
-
-    def OnUndo(self, e):
-        if self.count > 1 and self.count <= 5:
-            self.count = self.count - 1
-
-        if self.count == 1:
-            self.toolbar.EnableTool(wx.ID_UNDO, False)
-
-        if self.count == 4:
-            self.toolbar.EnableTool(wx.ID_REDO, True)
-
-    def OnRedo(self, e):
-        if self.count < 5 and self.count >= 1:
-            self.count = self.count + 1
-
-        if self.count == 5:
-            self.toolbar.EnableTool(wx.ID_REDO, False)
-
-        if self.count == 2:
-            self.toolbar.EnableTool(wx.ID_UNDO, True)
+        menubar = wx.MenuBar()
+        fileMenu = wx.Menu()
+        menubar.Append(fileMenu, '&File')
+        self.SetMenuBar(menubar)
 
 
-    def OnQuit(self, e):
-        self.Close()
+        vbox = wx.BoxSizer(wx.VERTICAL)
+        self.display = wx.TextCtrl(self, style=wx.TE_RIGHT)
+        vbox.Add(self.display, flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=4)
+        gs = wx.GridSizer(5, 4, 5, 5)
 
-def main():
+        gs.AddMany( [(wx.Button(self, label='Cls'), 0, wx.EXPAND),
+            (wx.Button(self, label='Bck'), 0, wx.EXPAND),
+            (wx.StaticText(self), wx.EXPAND),
+            (wx.Button(self, label='Close'), 0, wx.EXPAND),
+            (wx.Button(self, label='7'), 0, wx.EXPAND),
+            (wx.Button(self, label='8'), 0, wx.EXPAND),
+            (wx.Button(self, label='9'), 0, wx.EXPAND),
+            (wx.Button(self, label='/'), 0, wx.EXPAND),
+            (wx.Button(self, label='4'), 0, wx.EXPAND),
+            (wx.Button(self, label='5'), 0, wx.EXPAND),
+            (wx.Button(self, label='6'), 0, wx.EXPAND),
+            (wx.Button(self, label='*'), 0, wx.EXPAND),
+            (wx.Button(self, label='1'), 0, wx.EXPAND),
+            (wx.Button(self, label='2'), 0, wx.EXPAND),
+            (wx.Button(self, label='3'), 0, wx.EXPAND),
+            (wx.Button(self, label='-'), 0, wx.EXPAND),
+            (wx.Button(self, label='0'), 0, wx.EXPAND),
+            (wx.Button(self, label='.'), 0, wx.EXPAND),
+            (wx.Button(self, label='='), 0, wx.EXPAND),
+            (wx.Button(self, label='+'), 0, wx.EXPAND) ])
 
-    ex = wx.App()
-    Example(None)
-    ex.MainLoop()
+        vbox.Add(gs, proportion=1, flag=wx.EXPAND)
+        self.SetSizer(vbox)
 
 
 if __name__ == '__main__':
-    main()
+
+    app = wx.App()
+    Example(None, title='Calculator')
+    app.MainLoop()

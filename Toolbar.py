@@ -7,19 +7,20 @@ class Example (wx.Frame):
         self.initUI()
 
     def initUI(self):
-         toolbar = self.CreateToolBar()
-         otool = toolbar.AddLabelTool(wx.ID_OPEN, 'Open', wx.Bitmap('topen.png'))
-         stool = toolbar.AddLabelTool(wx.ID_SAVE, 'Save', wx.Bitmap('tsave.png'))
-         qtool = toolbar.AddLabelTool(wx.ID_ANY, 'Quit', wx.Bitmap('texit.png'))
+        toolbar = self.CreateToolBar()
+        toolbar.AddLabelTool(wx.ID_NEW, 'New', wx.Bitmap('tnew.png'))
+        toolbar.AddLabelTool(wx.ID_OPEN, 'Open', wx.Bitmap('topen.png'))
+        toolbar.AddLabelTool(wx.ID_SAVE, 'Save', wx.Bitmap('tsave.png'))
+        qtool = toolbar.AddLabelTool(wx.ID_ANY, 'Quit', wx.Bitmap('texit.png'))
 
-         toolbar.Realize()
+        toolbar.Realize()
 
-         self.Bind(wx.EVT_TOOL, self.OnQuit, qtool)
+        self.Bind(wx.EVT_TOOL, self.OnQuit, qtool)
 
-         self.SetTitle('Simple toolbar')
-         self.SetSize((300,250))
-         self.Centre()
-         self.Show()
+        self.SetTitle('Simple toolbar')
+        self.SetSize((300,250))
+        self.Centre()
+        self.Show()
 
     def OnQuit(self, event):
         self.Close()
