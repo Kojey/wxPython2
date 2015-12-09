@@ -2,21 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="74775531-cdbf-4104-b15e-8576c54cec6a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/icon/topen.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AbsolutePositioning.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/FlexGridSizer.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoToClass.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GridSizer.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/topen.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/NewClass.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/RenameWindow.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/wxPython2.iml" afterPath="$PROJECT_DIR$/.idea/wxPython2.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EnableTool.py" afterPath="$PROJECT_DIR$/EnableTool.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Toolbar.py" afterPath="$PROJECT_DIR$/Toolbar.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a.py" afterPath="$PROJECT_DIR$/a.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/texit.png" afterPath="$PROJECT_DIR$/icon/texit.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tsave.png" afterPath="$PROJECT_DIR$/icon/tsave.png" />
     </list>
     <ignored path="wxPython2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,6 +26,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="a.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/a.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-12.4827585">
+              <caret line="86" column="32" selection-start-line="86" selection-start-column="32" selection-end-line="86" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="GoToClass.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GoToClass.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -47,21 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="a.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/a.py">
+      <file leaf-file-name="NewClass.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/NewClass.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FlexGridSizer.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/FlexGridSizer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.56">
-              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+            <state vertical-scroll-proportion="1.7333333">
+              <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -101,10 +90,12 @@
         <option value="$PROJECT_DIR$/EnableTool.py" />
         <option value="$PROJECT_DIR$/AbsolutePositioning.py" />
         <option value="$PROJECT_DIR$/GoToClass.py" />
-        <option value="$PROJECT_DIR$/a.py" />
         <option value="$PROJECT_DIR$/b.py" />
         <option value="$PROJECT_DIR$/GridSizer.py" />
         <option value="$PROJECT_DIR$/FlexGridSizer.py" />
+        <option value="$PROJECT_DIR$/RenameWindow.py" />
+        <option value="$PROJECT_DIR$/a.py" />
+        <option value="$PROJECT_DIR$/NewClass.py" />
       </list>
     </option>
   </component>
@@ -190,7 +181,7 @@
       <recent name="D:\Work\pythonTuts\wxPython2\icon" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.FlexGridSizer">
+  <component name="RunManager" selected="Python.NewClass">
     <configuration default="false" name="a (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -204,23 +195,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="wxPython2" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/a.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="GoToClass" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="wxPython2" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GoToClass.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -242,23 +216,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="b" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="wxPython2" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/b.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
     <configuration default="false" name="FlexGridSizer" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -272,6 +229,40 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="wxPython2" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/FlexGridSizer.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="RenameWindow" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="wxPython2" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/RenameWindow.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="NewClass" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="wxPython2" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NewClass.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -418,18 +409,18 @@
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Python.Unnamed" />
       <item index="1" class="java.lang.String" itemvalue="Python.a (1)" />
-      <item index="2" class="java.lang.String" itemvalue="Python.GoToClass" />
-      <item index="3" class="java.lang.String" itemvalue="Python.GridSizer" />
-      <item index="4" class="java.lang.String" itemvalue="Python.b" />
-      <item index="5" class="java.lang.String" itemvalue="Python.FlexGridSizer" />
+      <item index="2" class="java.lang.String" itemvalue="Python.GridSizer" />
+      <item index="3" class="java.lang.String" itemvalue="Python.FlexGridSizer" />
+      <item index="4" class="java.lang.String" itemvalue="Python.RenameWindow" />
+      <item index="5" class="java.lang.String" itemvalue="Python.NewClass" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.FlexGridSizer" />
+        <item index="0" class="java.lang.String" itemvalue="Python.NewClass" />
         <item index="1" class="java.lang.String" itemvalue="Python.a (1)" />
-        <item index="2" class="java.lang.String" itemvalue="Python.GridSizer" />
-        <item index="3" class="java.lang.String" itemvalue="Python.b" />
-        <item index="4" class="java.lang.String" itemvalue="Python.GoToClass" />
+        <item index="2" class="java.lang.String" itemvalue="Python.RenameWindow" />
+        <item index="3" class="java.lang.String" itemvalue="Python.FlexGridSizer" />
+        <item index="4" class="java.lang.String" itemvalue="Python.GridSizer" />
       </list>
     </recent_temporary>
   </component>
@@ -450,20 +441,26 @@
       <option name="project" value="LOCAL" />
       <updated>1449608098277</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Doing 'Rename window' part of tut 2 on wxPython">
+      <created>1449619055141</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1449619055141</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="697" height="735" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23201175" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15271659" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2752" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1392" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -482,7 +479,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="End of Menus and toolbars" />
-    <option name="LAST_COMMIT_MESSAGE" value="End of Menus and toolbars" />
+    <MESSAGE value="Doing 'Rename window' part of tut 2 on wxPython" />
+    <option name="LAST_COMMIT_MESSAGE" value="Doing 'Rename window' part of tut 2 on wxPython" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -601,10 +599,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/FlexGridSizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GoToClass.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RenameWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="18" selection-start-line="38" selection-start-column="18" selection-end-line="38" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/a.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.4827585">
+          <caret line="86" column="32" selection-start-line="86" selection-start-column="32" selection-end-line="86" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -617,18 +639,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a.py">
+    <entry file="file://$PROJECT_DIR$/NewClass.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FlexGridSizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+        <state vertical-scroll-proportion="1.7333333">
+          <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
           <folding />
         </state>
       </provider>
