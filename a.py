@@ -1,88 +1,97 @@
 import wx
 
-class Example(wx.Frame):
+class ChangeDepthDialog(wx.Dialog):
 
-    def __init__(self, parent, title):
-        super(Example, self).__init__(parent, title=title,
-            size=(450, 350))
+    def __init__(self, *args, **kw):
+        super(ChangeDepthDialog, self).__init__(*args, **kw)
 
         self.InitUI()
-        self.Centre()
-        self.Show()
+        self.SetSize((250, 200))
+        self.SetTitle("Change Color Depth")
+
 
     def InitUI(self):
 
-        panel = wx.Panel(self)
+        pnl = wx.Panel(self)
+        vbox = wx.BoxSizer(wx.VERTICAL)
 
-        sizer = wx.GridBagSizer(5, 5)
+        sb = wx.StaticBox(pnl, label='Colors')
+        sbs = wx.StaticBoxSizer(sb, orient=wx.VERTICAL)
+        sbs.Add(wx.RadioButton(pnl, label='256 Colors',
+            style=wx.RB_GROUP))
+        sbs.Add(wx.RadioButton(pnl, label='16 Colors'))
+        sbs.Add(wx.RadioButton(pnl, label='2 Colors'))
 
-        text1 = wx.StaticText(panel, label="Java Class")
-        sizer.Add(text1, pos=(0, 0), flag=wx.TOP|wx.LEFT|wx.BOTTOM,
-            border=15)
+        hbox1 = wx.BoxSizer(wx.HORIZONTAL)
+        hbox1.Add(wx.RadioButton(pnl, label='Custom'))
+        hbox1.Add(wx.TextCtrl(pnl), flag=wx.LEFT, border=5)
+        sbs.Add(hbox1)
 
-        icon = wx.StaticBitmap(panel, bitmap=wx.Bitmap('icon/settings.png'))
-        sizer.Add(icon, pos=(0, 4), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT,
-            border=5)
+        pnl.SetSizer(sbs)
 
-        line = wx.StaticLine(panel)
-        sizer.Add(line, pos=(1, 0), span=(1, 5),
-            flag=wx.EXPAND|wx.BOTTOM, border=10)
+        hbox2 = wx.BoxSizer(wx.HORIZONTAL)
+        okButton = wx.Button(self, label='Ok')
+        closeButton = wx.Button(self, label='Close')
+        hbox2.Add(okButton)
+        hbox2.Add(closeButton, flag=wx.LEFT, border=5)
 
-        text2 = wx.StaticText(panel, label="Name")
-        sizer.Add(text2, pos=(2, 0), flag=wx.LEFT, border=10)
+        vbox.Add(pnl, proportion=1,
+            flag=wx.ALL|wx.EXPAND, border=5)
+        vbox.Add(hbox2,
+            flag=wx.ALIGN_CENTER|wx.TOP|wx.BOTTOM, border=10)
 
-        tc1 = wx.TextCtrl(panel)
-        sizer.Add(tc1, pos=(2, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND)
+        self.SetSizer(vbox)
 
-        text3 = wx.StaticText(panel, label="Package")
-        sizer.Add(text3, pos=(3, 0), flag=wx.LEFT|wx.TOP, border=10)
+        okButton.Bind(wx.EVT_BUTTON, self.OnClose)
+        closeButton.Bind(wx.EVT_BUTTON, self.OnClose)
 
-        tc2 = wx.TextCtrl(panel)
-        sizer.Add(tc2, pos=(3, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND,
-            border=5)
 
-        button1 = wx.Button(panel, label="Browse...")
-        sizer.Add(button1, pos=(3, 4), flag=wx.TOP|wx.RIGHT, border=5)
+    def OnClose(self, e):
 
-        text4 = wx.StaticText(panel, label="Extends")
-        sizer.Add(text4, pos=(4, 0), flag=wx.TOP|wx.LEFT, border=10)
+        self.Destroy()
 
-        combo = wx.ComboBox(panel)
-        sizer.Add(combo, pos=(4, 1), span=(1, 3),
-            flag=wx.TOP|wx.EXPAND, border=5)
 
-        button2 = wx.Button(panel, label="Browse...")
-        sizer.Add(button2, pos=(4, 4), flag=wx.TOP|wx.RIGHT, border=5)
+class Example(wx.Frame):
 
-        sb = wx.StaticBox(panel, label="Optional Attributes")
+    def __init__(self, *args, **kw):
+        super(Example, self).__init__(*args, **kw)
 
-        boxsizer = wx.StaticBoxSizer(sb, wx.VERTICAL)
-        boxsizer.Add(wx.CheckBox(panel, label="Public"),
-            flag=wx.LEFT|wx.TOP, border=5)
-        boxsizer.Add(wx.CheckBox(panel, label="Generate Default Constructor"),
-            flag=wx.LEFT, border=5)
-        boxsizer.Add(wx.CheckBox(panel, label="Generate Main Method"),
-            flag=wx.LEFT|wx.BOTTOM, border=5)
-        sizer.Add(boxsizer, pos=(5, 0), span=(1, 5),
-            flag=wx.EXPAND|wx.TOP|wx.LEFT|wx.RIGHT , border=10)
+        self.InitUI()
 
-        button3 = wx.Button(panel, label='Help')
-        sizer.Add(button3, pos=(7, 0), flag=wx.LEFT, border=10)
 
-        button4 = wx.Button(panel, label="Ok")
-        sizer.Add(button4, pos=(7, 3))
+    def InitUI(self):
 
-        button5 = wx.Button(panel, label="Cancel")
-        sizer.Add(button5, pos=(7, 4), span=(1, 1),
-            flag=wx.BOTTOM|wx.RIGHT, border=5)
+        ID_DEPTH = wx.NewId()
 
-        sizer.AddGrowableCol(2)
+        tb = self.CreateToolBar()
+        tb.AddLabelTool(id=ID_DEPTH, label='',
+            bitmap=wx.Bitmap('icon/texit.png'))
 
-        panel.SetSizer(sizer)
+        tb.Realize()
+
+        self.Bind(wx.EVT_TOOL, self.OnChangeDepth,
+            id=ID_DEPTH)
+
+        self.SetSize((300, 200))
+        self.SetTitle('Custom dialog')
+        self.Centre()
+        self.Show(True)
+
+
+    def OnChangeDepth(self, e):
+
+        chgdep = ChangeDepthDialog(None,
+            title='Change Color Depth')
+        chgdep.ShowModal()
+        chgdep.Destroy()
+
+
+def main():
+
+    ex = wx.App()
+    Example(None)
+    ex.MainLoop()
 
 
 if __name__ == '__main__':
-
-    app = wx.App()
-    Example(None, title="Exmple Create Java Class")
-    app.MainLoop()
+    main()
