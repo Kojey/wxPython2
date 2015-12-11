@@ -1,97 +1,143 @@
+
 import wx
 
-class ChangeDepthDialog(wx.Dialog):
-
-    def __init__(self, *args, **kw):
-        super(ChangeDepthDialog, self).__init__(*args, **kw)
-
-        self.InitUI()
-        self.SetSize((250, 200))
-        self.SetTitle("Change Color Depth")
+articles = [['Mozilla rocks', 'The year of the Mozilla', 'Earth on Fire'],
+            ['Gnome pretty, Gnome Slow', 'Gnome, KDE, Icewm, XFCE', 'Where is Gnome heading?'],
+            ['Java number one language', 'Compiled languages, intrepreted Languages', 'Java on Desktop?']]
 
 
-    def InitUI(self):
 
-        pnl = wx.Panel(self)
+class ListCtrlLeft(wx.ListCtrl):
+    def __init__(self, parent, id):
+        wx.ListCtrl.__init__(self, parent, id, style=wx.LC_REPORT | wx.LC_HRULES |
+		wx.LC_NO_HEADER | wx.LC_SINGLE_SEL)
+        images = ['icon/topen.png', 'icon/texit.png', 'icon/tsave.png']
+
+        self.parent = parent
+
+        self.Bind(wx.EVT_SIZE, self.OnSize)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnSelect)
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnDeSelect)
+        self.Bind(wx.EVT_SET_FOCUS, self.OnFocus)
+
+        self.il = wx.ImageList(21, 21)
+        for i in images:
+            self.il.Add(wx.Bitmap(i))
+
+        self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
+        self.InsertColumn(0, '')
+
+        for i in range(3):
+            self.InsertStringItem(0, '')
+            self.SetItemImage(0, i)
+
+    def OnSize(self, event):
+        size = self.parent.GetSize()
+       # self.SetColumnWidth(0, size.x-5)
+        event.Skip()
+
+    def OnSelect(self, event):
+        window = self.parent.GetGrandParent().FindWindowByName('ListControlOnRight')
+        index = event.GetIndex()
+        window.LoadData(index)
+
+    def OnDeSelect(self, event):
+        index = event.GetIndex()
+        self.SetItemBackgroundColour(index, 'WHITE')
+
+    def OnFocus(self, event):
+        self.SetItemBackgroundColour(1, 'blue')
+
+class ListCtrlRight(wx.ListCtrl):
+    def __init__(self, parent, id):
+        wx.ListCtrl.__init__(self, parent, id, style=wx.LC_REPORT | wx.LC_HRULES |
+		wx.LC_NO_HEADER | wx.LC_SINGLE_SEL)
+
+        self.parent = parent
+
+        self.Bind(wx.EVT_SIZE, self.OnSize)
+
+        self.InsertColumn(0, '')
+
+
+    def OnSize(self, event):
+        size = self.parent.GetSize()
+        #self.SetColumnWidth(0, size.x-5)
+        event.Skip()
+
+    def LoadData(self, index):
+        self.DeleteAllItems()
+        for i in range(3):
+            self.InsertStringItem(0, articles[index][i])
+
+
+class Reader(wx.Frame):
+    def __init__(self, parent, id, title):
+        wx.Frame.__init__(self, parent, id, title)
+
+        hbox = wx.BoxSizer(wx.HORIZONTAL)
+        splitter = wx.SplitterWindow(self, -1, style=wx.SP_LIVE_UPDATE|wx.SP_NOBORDER)
+
+        vbox1 = wx.BoxSizer(wx.VERTICAL)
+        panel1 = wx.Panel(splitter, -1)
+        panel11 = wx.Panel(panel1, -1, size=(-1, 40))
+        panel11.SetBackgroundColour('#53728c')
+        st1 = wx.StaticText(panel11, -1, 'Feeds', (5, 5))
+        st1.SetForegroundColour('WHITE')
+
+        panel12 = wx.Panel(panel1, -1, style=wx.BORDER_SUNKEN)
         vbox = wx.BoxSizer(wx.VERTICAL)
+        list1 = ListCtrlLeft(panel12, -1)
 
-        sb = wx.StaticBox(pnl, label='Colors')
-        sbs = wx.StaticBoxSizer(sb, orient=wx.VERTICAL)
-        sbs.Add(wx.RadioButton(pnl, label='256 Colors',
-            style=wx.RB_GROUP))
-        sbs.Add(wx.RadioButton(pnl, label='16 Colors'))
-        sbs.Add(wx.RadioButton(pnl, label='2 Colors'))
-
-        hbox1 = wx.BoxSizer(wx.HORIZONTAL)
-        hbox1.Add(wx.RadioButton(pnl, label='Custom'))
-        hbox1.Add(wx.TextCtrl(pnl), flag=wx.LEFT, border=5)
-        sbs.Add(hbox1)
-
-        pnl.SetSizer(sbs)
-
-        hbox2 = wx.BoxSizer(wx.HORIZONTAL)
-        okButton = wx.Button(self, label='Ok')
-        closeButton = wx.Button(self, label='Close')
-        hbox2.Add(okButton)
-        hbox2.Add(closeButton, flag=wx.LEFT, border=5)
-
-        vbox.Add(pnl, proportion=1,
-            flag=wx.ALL|wx.EXPAND, border=5)
-        vbox.Add(hbox2,
-            flag=wx.ALIGN_CENTER|wx.TOP|wx.BOTTOM, border=10)
-
-        self.SetSizer(vbox)
-
-        okButton.Bind(wx.EVT_BUTTON, self.OnClose)
-        closeButton.Bind(wx.EVT_BUTTON, self.OnClose)
+        vbox.Add(list1, 1, wx.EXPAND)
+        panel12.SetSizer(vbox)
+        panel12.SetBackgroundColour('WHITE')
 
 
-    def OnClose(self, e):
+        vbox1.Add(panel11, 0, wx.EXPAND)
+        vbox1.Add(panel12, 1, wx.EXPAND)
 
-        self.Destroy()
+        panel1.SetSizer(vbox1)
+
+        vbox2 = wx.BoxSizer(wx.VERTICAL)
+        panel2 = wx.Panel(splitter, -1)
+        panel21 = wx.Panel(panel2, -1, size=(-1, 40), style=wx.NO_BORDER)
+        st2 = wx.StaticText(panel21, -1, 'Articles', (5, 5))
+        st2.SetForegroundColour('WHITE')
+
+        panel21.SetBackgroundColour('#53728c')
+        panel22 = wx.Panel(panel2, -1, style=wx.BORDER_RAISED)
+        vbox3 = wx.BoxSizer(wx.VERTICAL)
+        list2 = ListCtrlRight(panel22, -1)
+        list2.SetName('ListControlOnRight')
+        vbox3.Add(list2, 1, wx.EXPAND)
+        panel22.SetSizer(vbox3)
 
 
-class Example(wx.Frame):
+        panel22.SetBackgroundColour('WHITE')
+        vbox2.Add(panel21, 0, wx.EXPAND)
+        vbox2.Add(panel22, 1, wx.EXPAND)
 
-    def __init__(self, *args, **kw):
-        super(Example, self).__init__(*args, **kw)
+        panel2.SetSizer(vbox2)
 
-        self.InitUI()
+        toolbar = self.CreateToolBar()
+        toolbar.AddLabelTool(1, 'Exit', wx.Bitmap('icon/texit.png'))
+        toolbar.Realize()
 
+        self.Bind(wx.EVT_TOOL, self.ExitApp, id=1)
 
-    def InitUI(self):
-
-        ID_DEPTH = wx.NewId()
-
-        tb = self.CreateToolBar()
-        tb.AddLabelTool(id=ID_DEPTH, label='',
-            bitmap=wx.Bitmap('icon/texit.png'))
-
-        tb.Realize()
-
-        self.Bind(wx.EVT_TOOL, self.OnChangeDepth,
-            id=ID_DEPTH)
-
-        self.SetSize((300, 200))
-        self.SetTitle('Custom dialog')
+        hbox.Add(splitter, 1, wx.EXPAND | wx.TOP | wx.BOTTOM, 5)
+        self.SetSizer(hbox)
+        self.CreateStatusBar()
+        splitter.SplitVertically(panel1, panel2)
         self.Centre()
         self.Show(True)
 
 
-    def OnChangeDepth(self, e):
-
-        chgdep = ChangeDepthDialog(None,
-            title='Change Color Depth')
-        chgdep.ShowModal()
-        chgdep.Destroy()
+    def ExitApp(self, event):
+        self.Close()
 
 
-def main():
-
-    ex = wx.App()
-    Example(None)
-    ex.MainLoop()
-
-
-if __name__ == '__main__':
-    main()
+app = wx.App()
+Reader(None, -1, 'Reader')
+app.MainLoop()
