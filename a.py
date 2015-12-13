@@ -62,7 +62,7 @@ class ListCtrlRight(wx.ListCtrl):
 
     def OnSize(self, event):
         size = self.parent.GetSize()
-        #self.SetColumnWidth(0, size.x-5)
+        self.SetColumnWidth(0, size.x-95)
         event.Skip()
 
     def LoadData(self, index):
