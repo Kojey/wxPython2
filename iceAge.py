@@ -14,8 +14,8 @@ class Example(wx.Dialog):
 
     def InitUI(self):
 
-        images = ['icon/file.png', 'icon/file.png', 'icon/file.png', 'icon/file.png',
-                'icon/file.png', 'icon/file.png', 'icon/file.png', 'icon/file.png']
+        images = ['icon/sid1.jpg', 'icon/sid2.jpg', 'icon/sid3.jpg', 'icon/sid4.jpg',
+                'icon/sid5.jpg', 'icon/sid6.jpg', 'icon/sid7.jpg', 'icon/sid8.jpg']
 
         self.pos = [ [0, 1, 2], [3, 4, 5], [6, 7, 8] ]
 
@@ -30,7 +30,7 @@ class Example(wx.Dialog):
                 btn.Bind(wx.EVT_BUTTON, self.OnPressButton, btn)
                 self.sizer.Add(btn)
 
-        self.empty = wx.BitmapButton(self, bitmap=wx.Bitmap('icon/texit.png'))
+        self.empty = wx.BitmapButton(self, bitmap=wx.Bitmap('icon/blank.png'))
         self.empty.Bind(wx.EVT_BUTTON, self.OnPressButton, self.empty)
         self.sizer.Add(self.empty)
 

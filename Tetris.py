@@ -1,4 +1,3 @@
-
 import wx
 import random
 
@@ -23,8 +22,7 @@ class Board(wx.Panel):
     ID_TIMER = 1
 
     def __init__(self, parent):
-        wx.Panel.__init__(self, parent)
-
+        wx.Panel.__init__(self, parent,style=wx.WANTS_CHARS)
         self.timer = wx.Timer(self, Board.ID_TIMER)
         self.isWaitingAfterLine = False
         self.curPiece = Shape()
