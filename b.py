@@ -1,91 +1,123 @@
+from wx.lib import sheet
 import wx
-import sys
-from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin
 
-packages = [('abiword', '5.8M', 'base'), ('adie', '145k', 'base'),
-    ('airsnort', '71k', 'base'), ('ara', '717k', 'base'), ('arc', '139k', 'base'),
-    ('asc', '5.8M', 'base'), ('ascii', '74k', 'base'), ('ash', '74k', 'base')]
 
-class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
+class MySheet(sheet.CSheet):
     def __init__(self, parent):
-        wx.ListCtrl.__init__(self, parent, -1, style=wx.LC_REPORT | wx.SUNKEN_BORDER)
-        CheckListCtrlMixin.__init__(self)
-        ListCtrlAutoWidthMixin.__init__(self)
+        sheet.CSheet.__init__(self, parent)
+        self.row = self.col = 0
+        self.SetNumberRows(55)
+        self.SetNumberCols(25)
 
+        for i in range(55):
+            self.SetRowSize(i, 20)
 
-class Repository(wx.Frame):
+    def OnGridSelectCell(self, event):
+        self.row, self.col = event.GetRow(), event.GetCol()
+        control = self.GetParent().GetParent().position
+        value =  self.GetColLabelValue(self.col) + self.GetRowLabelValue(self.row)
+        control.SetValue(value)
+        event.Skip()
+
+class Newt(wx.Frame):
     def __init__(self, parent, id, title):
-        wx.Frame.__init__(self, parent, id, title, size=(450, 400))
+        wx.Frame.__init__(self, parent, -1, title, size = (550, 500))
 
-        panel = wx.Panel(self, -1)
+        fonts = ['Times New Roman', 'Times', 'Courier', 'Courier New', 'Helvetica',
+                'Sans', 'verdana', 'utkal', 'aakar', 'Arial']
+        font_sizes = ['10', '11', '12', '14', '16']
 
-        vbox = wx.BoxSizer(wx.VERTICAL)
-        hbox = wx.BoxSizer(wx.HORIZONTAL)
+        box = wx.BoxSizer(wx.VERTICAL)
+        menuBar = wx.MenuBar()
 
-        leftPanel = wx.Panel(panel, -1)
-        rightPanel = wx.Panel(panel, -1)
+        menu1 = wx.Menu()
+        menuBar.Append(menu1, '&File')
+        menu2 = wx.Menu()
+        menuBar.Append(menu2, '&Edit')
+        menu3 = wx.Menu()
+        menuBar.Append(menu3, '&Edit')
+        menu4 = wx.Menu()
+        menuBar.Append(menu4, '&Insert')
+        menu5 = wx.Menu()
+        menuBar.Append(menu5, 'F&ormat')
+        menu6 = wx.Menu()
+        menuBar.Append(menu6, '&Tools')
+        menu7 = wx.Menu()
+        menuBar.Append(menu7, '&Data')
+        menu8 = wx.Menu()
+        menuBar.Append(menu8, '&Help')
 
-        self.log = wx.TextCtrl(rightPanel, -1, style=wx.TE_MULTILINE)
-        self.list = CheckListCtrl(rightPanel)
-        self.list.InsertColumn(0, 'Package', width=140)
-        self.list.InsertColumn(1, 'Size')
-        self.list.InsertColumn(2, 'Repository')
+        self.SetMenuBar(menuBar)
 
-        for i in packages:
-            index = self.list.InsertStringItem(sys.maxint, i[0])
-            self.list.SetStringItem(index, 1, i[1])
-            self.list.SetStringItem(index, 2, i[2])
+        toolbar1 = wx.ToolBar(self, -1, style= wx.TB_HORIZONTAL)
+        toolbar1.AddLabelTool(-1, '', wx.Bitmap('icon/tnew.png'))
+        toolbar1.AddLabelTool(-1, '', wx.Bitmap('icon/topen.png'))
+        toolbar1.AddLabelTool(-1, '', wx.Bitmap('icon/tsave.png'))
+        toolbar1.AddSeparator()
+        toolbar1.AddLabelTool(-1, '', wx.Bitmap('icon/cut.png'))
+        toolbar1.AddLabelTool(-1, '', wx.Bitmap('icon/tcopy.png'))
+        toolbar1.AddLabelTool(-1, '', wx.Bitmap('icon/paste.png'))
+        toolbar1.AddLabelTool(-1, '',  wx.Bitmap('icon/delete.png'))
+        toolbar1.AddSeparator()
+        toolbar1.AddLabelTool(-1, '', wx.Bitmap('icon/tundo.png'))
+        toolbar1.AddLabelTool(-1, '', wx.Bitmap('icon/tredo.png'))
+        toolbar1.AddSeparator()
+        toolbar1.AddLabelTool(-1, '', wx.Bitmap('icon/incr22.png'))
+        toolbar1.AddLabelTool(-1, '', wx.Bitmap('icon/incr22.png'))
+        toolbar1.AddSeparator()
+        toolbar1.AddLabelTool(-1, '', wx.Bitmap('icon/chart.png'))
+        toolbar1.AddSeparator()
+        toolbar1.AddLabelTool(-1, '',  wx.Bitmap('icon/texit.png'))
 
-        vbox2 = wx.BoxSizer(wx.VERTICAL)
+        toolbar1.Realize()
 
-        sel = wx.Button(leftPanel, -1, 'Select All', size=(100, -1))
-        des = wx.Button(leftPanel, -1, 'Deselect All', size=(100, -1))
-        apply = wx.Button(leftPanel, -1, 'Apply', size=(100, -1))
+        toolbar2 = wx.ToolBar(self, wx.TB_HORIZONTAL | wx.TB_TEXT)
 
+        self.position = wx.TextCtrl(toolbar2)
+        font = wx.ComboBox(toolbar2, -1, value = 'Times', choices=fonts, size=(100, -1),
+                style=wx.CB_DROPDOWN)
+        font_height = wx.ComboBox(toolbar2, -1, value = '10',  choices=font_sizes,
+                size=(50, -1), style=wx.CB_DROPDOWN)
 
-        self.Bind(wx.EVT_BUTTON, self.OnSelectAll, id=sel.GetId())
-        self.Bind(wx.EVT_BUTTON, self.OnDeselectAll, id=des.GetId())
-        self.Bind(wx.EVT_BUTTON, self.OnApply, id=apply.GetId())
+        toolbar2.AddControl(self.position)
+        toolbar2.AddControl(font)
+        toolbar2.AddControl(font_height)
+        toolbar2.AddSeparator()
+        bold = wx.Bitmap('icon/chart.png')
+        toolbar2.AddCheckTool(-1, bold)
+        italic = wx.Bitmap('icon/chart.png')
+        toolbar2.AddCheckTool(-1, italic)
+        under = wx.Bitmap('icon/chart.png')
+        toolbar2.AddCheckTool(-1, under)
+        toolbar2.AddSeparator()
+        toolbar2.AddLabelTool(-1, '', wx.Bitmap('icon/chart.png'))
+        toolbar2.AddLabelTool(-1, '', wx.Bitmap('icon/chart.png'))
+        toolbar2.AddLabelTool(-1, '', wx.Bitmap('icon/chart.png'))
 
-        vbox2.Add(sel, 0, wx.TOP, 5)
-        vbox2.Add(des)
-        vbox2.Add(apply)
+        box.Add(toolbar1,1,wx.EXPAND, border=5)
+        box.Add((5,5) , 0)
+        box.Add(toolbar2,1, wx.EXPAND)
+        box.Add((5,10) , 0)
 
-        leftPanel.SetSizer(vbox2)
+        toolbar2.Realize()
+        self.SetSizer(box)
+        notebook = wx.Notebook(self, -1, style=wx.RIGHT)
 
-        vbox.Add(self.list, 1, wx.EXPAND | wx.TOP, 3)
-        vbox.Add((-1, 10))
-        vbox.Add(self.log, 0.5, wx.EXPAND)
-        vbox.Add((-1, 10))
+        sheet1 = MySheet(notebook)
+        sheet2 = MySheet(notebook)
+        sheet3 = MySheet(notebook)
+        sheet1.SetFocus()
 
-        rightPanel.SetSizer(vbox)
+        notebook.AddPage(sheet1, 'Sheet1')
+        notebook.AddPage(sheet2, 'Sheet2')
+        notebook.AddPage(sheet3, 'Sheet3')
 
-        hbox.Add(leftPanel, 0, wx.EXPAND | wx.RIGHT, 5)
-        hbox.Add(rightPanel, 1, wx.EXPAND)
-        hbox.Add((3, -1))
+        box.Add(notebook, 1, wx.EXPAND)
 
-        panel.SetSizer(hbox)
-
+        self.CreateStatusBar()
         self.Centre()
         self.Show(True)
 
-    def OnSelectAll(self, event):
-        num = self.list.GetItemCount()
-        for i in range(num):
-            self.list.CheckItem(i)
-
-    def OnDeselectAll(self, event):
-        num = self.list.GetItemCount()
-        for i in range(num):
-            self.list.CheckItem(i, False)
-
-    def OnApply(self, event):
-        num = self.list.GetItemCount()
-        for i in range(num):
-            if i == 0: self.log.Clear()
-            if self.list.IsChecked(i):
-                self.log.AppendText(self.list.GetItemText(i) + '\n')
-
 app = wx.App()
-Repository(None, -1, 'Repository')
+Newt(None, -1, 'SpreadSheet')
 app.MainLoop()

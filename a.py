@@ -1,143 +1,160 @@
-
 import wx
-
-articles = [['Mozilla rocks', 'The year of the Mozilla', 'Earth on Fire'],
-            ['Gnome pretty, Gnome Slow', 'Gnome, KDE, Icewm, XFCE', 'Where is Gnome heading?'],
-            ['Java number one language', 'Compiled languages, intrepreted Languages', 'Java on Desktop?']]
+import os
+import time
 
 
+ID_BUTTON=100
+ID_EXIT=200
+ID_SPLITTER=300
 
-class ListCtrlLeft(wx.ListCtrl):
+class MyListCtrl(wx.ListCtrl):
     def __init__(self, parent, id):
-        wx.ListCtrl.__init__(self, parent, id, style=wx.LC_REPORT | wx.LC_HRULES |
-		wx.LC_NO_HEADER | wx.LC_SINGLE_SEL)
-        images = ['icon/topen.png', 'icon/texit.png', 'icon/tsave.png']
+        wx.ListCtrl.__init__(self, parent, id, style=wx.LC_REPORT)
 
-        self.parent = parent
+        files = os.listdir('.')
+        images = ['icon/topen.png','icon/tredo.png','icon/tundo.png','icon/settings.png','icon/texit.png','icon/tsave.png']
 
-        self.Bind(wx.EVT_SIZE, self.OnSize)
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnSelect)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnDeSelect)
-        self.Bind(wx.EVT_SET_FOCUS, self.OnFocus)
+        self.InsertColumn(0, 'Name')
+        self.InsertColumn(1, 'Ext')
+        self.InsertColumn(2, 'Size', wx.LIST_FORMAT_RIGHT)
+        self.InsertColumn(3, 'Modified')
+
+        self.SetColumnWidth(0, 220)
+        self.SetColumnWidth(1, 70)
+        self.SetColumnWidth(2, 100)
+        self.SetColumnWidth(3, 420)
 
         self.il = wx.ImageList(21, 21)
         for i in images:
             self.il.Add(wx.Bitmap(i))
-
         self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
-        self.InsertColumn(0, '')
 
-        for i in range(3):
-            self.InsertStringItem(0, '')
-            self.SetItemImage(0, i)
+        j = 1
+        self.InsertStringItem(0, '..')
+        self.SetItemImage(0, 5)
 
-    def OnSize(self, event):
-        size = self.parent.GetSize()
-       # self.SetColumnWidth(0, size.x-5)
-        event.Skip()
+        for i in files:
+            (name, ext) = os.path.splitext(i)
+            ex = ext[1:]
+            size = os.path.getsize(i)
+            sec = os.path.getmtime(i)
+            self.InsertStringItem(j, name)
+            self.SetStringItem(j, 1, ex)
+            self.SetStringItem(j, 2, str(size) + ' B')
+            self.SetStringItem(j, 3, time.strftime('%Y-%m-%d %H:%M',
+		time.localtime(sec)))
 
-    def OnSelect(self, event):
-        window = self.parent.GetGrandParent().FindWindowByName('ListControlOnRight')
-        index = event.GetIndex()
-        window.LoadData(index)
+            if os.path.isdir(i):
+                self.SetItemImage(j, 1)
+            elif ex == 'py':
+                self.SetItemImage(j, 2)
+            elif ex == 'jpg':
+                self.SetItemImage(j, 3)
+            elif ex == 'pdf':
+                self.SetItemImage(j, 4)
+            else:
+                self.SetItemImage(j, 0)
 
-    def OnDeSelect(self, event):
-        index = event.GetIndex()
-        self.SetItemBackgroundColour(index, 'WHITE')
+            if (j % 2) == 0:
+                self.SetItemBackgroundColour(j, '#e6f1f5')
+            j = j + 1
 
-    def OnFocus(self, event):
-        self.SetItemBackgroundColour(1, 'blue')
 
-class ListCtrlRight(wx.ListCtrl):
-    def __init__(self, parent, id):
-        wx.ListCtrl.__init__(self, parent, id, style=wx.LC_REPORT | wx.LC_HRULES |
-		wx.LC_NO_HEADER | wx.LC_SINGLE_SEL)
+class FileHunter(wx.Frame):
+    def __init__(self, parent, id, title):
+        wx.Frame.__init__(self, parent, -1, title)
 
-        self.parent = parent
+        self.splitter = wx.SplitterWindow(self, ID_SPLITTER, style=wx.SP_BORDER)
+        self.splitter.SetMinimumPaneSize(50)
+
+        p1 = MyListCtrl(self.splitter, -1)
+        p2 = MyListCtrl(self.splitter, -1)
+        self.splitter.SplitVertically(p1, p2)
 
         self.Bind(wx.EVT_SIZE, self.OnSize)
+        self.Bind(wx.EVT_SPLITTER_DCLICK, self.OnDoubleClick, id=ID_SPLITTER)
 
-        self.InsertColumn(0, '')
+        filemenu= wx.Menu()
+        filemenu.Append(ID_EXIT,"E&xit"," Terminate the program")
+        editmenu = wx.Menu()
+        netmenu = wx.Menu()
+        showmenu = wx.Menu()
+        configmenu = wx.Menu()
+        helpmenu = wx.Menu()
 
+        menuBar = wx.MenuBar()
+        menuBar.Append(filemenu,"&File")
+        menuBar.Append(editmenu, "&Edit")
+        menuBar.Append(netmenu, "&Net")
+        menuBar.Append(showmenu, "&Show")
+        menuBar.Append(configmenu, "&Config")
+        menuBar.Append(helpmenu, "&Help")
+        self.SetMenuBar(menuBar)
+        self.Bind(wx.EVT_MENU, self.OnExit, id=ID_EXIT)
 
-    def OnSize(self, event):
-        size = self.parent.GetSize()
-        self.SetColumnWidth(0, size.x-95)
-        event.Skip()
+        tb = self.CreateToolBar( wx.TB_HORIZONTAL | wx.NO_BORDER |
+		wx.TB_FLAT | wx.TB_TEXT)
+        tb.AddSimpleTool(10, wx.Bitmap('icon/tredo.png'), 'Previous')
+        tb.AddSimpleTool(20, wx.Bitmap('icon/texit.png'), 'Up one directory')
+        tb.AddSimpleTool(30, wx.Bitmap('icon/texit.png'), 'Home')
+        tb.AddSimpleTool(40, wx.Bitmap('icon/texit.png'), 'Refresh')
+        tb.AddSeparator()
+        tb.AddSimpleTool(50, wx.Bitmap('icon/texit.png'), 'Editor')
+        tb.AddSimpleTool(60, wx.Bitmap('icon/texit.png'), 'Terminal')
+        tb.AddSeparator()
+        tb.AddSimpleTool(70, wx.Bitmap('icon/texit.png'), 'Help')
+        tb.Realize()
 
-    def LoadData(self, index):
-        self.DeleteAllItems()
-        for i in range(3):
-            self.InsertStringItem(0, articles[index][i])
+        self.sizer2 = wx.BoxSizer(wx.HORIZONTAL)
 
+        button1 = wx.Button(self, ID_BUTTON + 1, "F3 View")
+        button2 = wx.Button(self, ID_BUTTON + 2, "F4 Edit")
+        button3 = wx.Button(self, ID_BUTTON + 3, "F5 Copy")
+        button4 = wx.Button(self, ID_BUTTON + 4, "F6 Move")
+        button5 = wx.Button(self, ID_BUTTON + 5, "F7 Mkdir")
+        button6 = wx.Button(self, ID_BUTTON + 6, "F8 Delete")
+        button7 = wx.Button(self, ID_BUTTON + 7, "F9 Rename")
+        button8 = wx.Button(self, ID_EXIT, "F10 Quit")
 
-class Reader(wx.Frame):
-    def __init__(self, parent, id, title):
-        wx.Frame.__init__(self, parent, id, title)
+        self.sizer2.Add(button1, 1, wx.EXPAND)
+        self.sizer2.Add(button2, 1, wx.EXPAND)
+        self.sizer2.Add(button3, 1, wx.EXPAND)
+        self.sizer2.Add(button4, 1, wx.EXPAND)
+        self.sizer2.Add(button5, 1, wx.EXPAND)
+        self.sizer2.Add(button6, 1, wx.EXPAND)
+        self.sizer2.Add(button7, 1, wx.EXPAND)
+        self.sizer2.Add(button8, 1, wx.EXPAND)
 
-        hbox = wx.BoxSizer(wx.HORIZONTAL)
-        splitter = wx.SplitterWindow(self, -1, style=wx.SP_LIVE_UPDATE|wx.SP_NOBORDER)
+        self.Bind(wx.EVT_BUTTON, self.OnExit, id=ID_EXIT)
 
-        vbox1 = wx.BoxSizer(wx.VERTICAL)
-        panel1 = wx.Panel(splitter, -1)
-        panel11 = wx.Panel(panel1, -1, size=(-1, 40))
-        panel11.SetBackgroundColour('#53728c')
-        st1 = wx.StaticText(panel11, -1, 'Feeds', (5, 5))
-        st1.SetForegroundColour('WHITE')
+        self.sizer = wx.BoxSizer(wx.VERTICAL)
+        self.sizer.Add(self.splitter,1,wx.EXPAND)
+        self.sizer.Add(self.sizer2,0,wx.EXPAND)
+        self.SetSizer(self.sizer)
 
-        panel12 = wx.Panel(panel1, -1, style=wx.BORDER_SUNKEN)
-        vbox = wx.BoxSizer(wx.VERTICAL)
-        list1 = ListCtrlLeft(panel12, -1)
+        size = wx.DisplaySize()
+        self.SetSize(size)
 
-        vbox.Add(list1, 1, wx.EXPAND)
-        panel12.SetSizer(vbox)
-        panel12.SetBackgroundColour('WHITE')
-
-
-        vbox1.Add(panel11, 0, wx.EXPAND)
-        vbox1.Add(panel12, 1, wx.EXPAND)
-
-        panel1.SetSizer(vbox1)
-
-        vbox2 = wx.BoxSizer(wx.VERTICAL)
-        panel2 = wx.Panel(splitter, -1)
-        panel21 = wx.Panel(panel2, -1, size=(-1, 40), style=wx.NO_BORDER)
-        st2 = wx.StaticText(panel21, -1, 'Articles', (5, 5))
-        st2.SetForegroundColour('WHITE')
-
-        panel21.SetBackgroundColour('#53728c')
-        panel22 = wx.Panel(panel2, -1, style=wx.BORDER_RAISED)
-        vbox3 = wx.BoxSizer(wx.VERTICAL)
-        list2 = ListCtrlRight(panel22, -1)
-        list2.SetName('ListControlOnRight')
-        vbox3.Add(list2, 1, wx.EXPAND)
-        panel22.SetSizer(vbox3)
-
-
-        panel22.SetBackgroundColour('WHITE')
-        vbox2.Add(panel21, 0, wx.EXPAND)
-        vbox2.Add(panel22, 1, wx.EXPAND)
-
-        panel2.SetSizer(vbox2)
-
-        toolbar = self.CreateToolBar()
-        toolbar.AddLabelTool(1, 'Exit', wx.Bitmap('icon/texit.png'))
-        toolbar.Realize()
-
-        self.Bind(wx.EVT_TOOL, self.ExitApp, id=1)
-
-        hbox.Add(splitter, 1, wx.EXPAND | wx.TOP | wx.BOTTOM, 5)
-        self.SetSizer(hbox)
-        self.CreateStatusBar()
-        splitter.SplitVertically(panel1, panel2)
-        self.Centre()
+        self.sb = self.CreateStatusBar()
+        self.sb.SetStatusText(os.getcwd())
+        self.Center()
         self.Show(True)
 
 
-    def ExitApp(self, event):
-        self.Close()
+    def OnExit(self,e):
+        self.Close(True)
+
+    def OnSize(self, event):
+        size = self.GetSize()
+        self.splitter.SetSashPosition(size.x / 2)
+        self.sb.SetStatusText(os.getcwd())
+        event.Skip()
 
 
-app = wx.App()
-Reader(None, -1, 'Reader')
+    def OnDoubleClick(self, event):
+        size =  self.GetSize()
+        self.splitter.SetSashPosition(size.x / 2)
+
+app = wx.App(0)
+FileHunter(None, -1, 'File Hunter')
 app.MainLoop()

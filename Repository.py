@@ -10,7 +10,7 @@ packages = [('abiword', '5.8M', 'base'), ('adie', '145k', 'base'),
 
 class CheckListBox(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
     def __init__(self, parent):
-        wx.ListCtrl.__init__(self, parent, -1, style=wx.LC_REPORT|wx.SUNKEN_BORDER)
+        wx.ListCtrl.__init__(self, parent, -1,size=(300,250), style=wx.LC_REPORT|wx.SUNKEN_BORDER)
         CheckListCtrlMixin.__init__(self)
         ListCtrlAutoWidthMixin.__init__(self)
 
@@ -27,19 +27,19 @@ class Repository(wx.Frame):
         hSizer = wx.BoxSizer(wx.HORIZONTAL)
         leftSizer = wx.BoxSizer(wx.VERTICAL)
         rightSizer = wx.BoxSizer(wx.VERTICAL)
-        hSizer.Add(leftPanel,1,wx.ALL,5)
-        hSizer.Add(rightPanel,2,wx.ALL,5)
+        hSizer.Add(leftPanel,0,wx.ALL,5)
+        hSizer.Add(rightPanel,1,wx.ALL,5)
         panel.SetSizer(hSizer)
 
         selBut = wx.Button(leftPanel, label='Select All')
         desBut = wx.Button(leftPanel, label='Deselect All')
         appBut = wx.Button(leftPanel, label='Apply')
 
-        leftSizer.Add(selBut)
-        leftSizer.Add(desBut)
-        leftSizer.Add(appBut)
+        leftSizer.Add(selBut,1,wx.EXPAND)
+        leftSizer.Add(desBut,1,wx.EXPAND)
+        leftSizer.Add(appBut,1,wx.EXPAND)
         leftPanel.SetSizer(leftSizer)
-       # """
+
         self.list = CheckListBox(rightPanel)
         self.list.InsertColumn(0, 'Package', width=140)
         self.list.InsertColumn(1, 'Size')
@@ -49,11 +49,11 @@ class Repository(wx.Frame):
             index = self.list.InsertStringItem(sys.maxint, i[0])
             self.list.SetStringItem(index, 1, i[1])
             self.list.SetStringItem(index, 2, i[2])
-        #"""
+
         self.txtCtrl = wx.TextCtrl(rightPanel, style=wx.TE_MULTILINE)
 
-        rightSizer.Add(self.list)
-        rightSizer.Add(self.txtCtrl,0,wx.EXPAND|wx.TOP,5)
+        rightSizer.Add(self.list,1,wx.EXPAND)
+        rightSizer.Add(self.txtCtrl,1,wx.EXPAND|wx.TOP,5)
         rightPanel.SetSizer(rightSizer)
 
         self.Bind(wx.EVT_BUTTON, self.OnSelectAll, selBut)
@@ -61,7 +61,7 @@ class Repository(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnApply, appBut)
 
         self.SetTitle('Repository')
-        self.SetSize((400, 250))
+        self.SetSize((400, 350))
         self.Centre()
         self.Show()
 
